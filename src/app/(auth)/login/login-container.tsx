@@ -36,7 +36,6 @@ export function LoginContainer() {
         </CardTitle>
         <CardDescription className="text-lg pt-2">
           <span className="font-semibold font-cal block">Sign in</span>
-          <LoginPage/>
           <span>
             to continue to{" "}
             <span className="font-semibold font-cal">Younicorn</span>
@@ -44,6 +43,7 @@ export function LoginContainer() {
         </CardDescription>
       </CardHeader>
       <CardContent className="">
+      <LoginPage/>
         <Button
           disabled={isLoading}
           className="mx-auto flex"

@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 const Login = async () => {
   const session = await getServerAuth();
   if (session) {
-    redirect("/dashboard/files");
+    redirect("/");
   }
   return (
     <main className=" min-h-screen grid place-items-center px-4">
