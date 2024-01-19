@@ -18,8 +18,8 @@ const config = {
       },
     },
     fontFamily: {
-      sans: ["--font-montserrat", "sans-serif"],
-      heading: ["--font-cal", "sans-serif"],
+      sans: ["var(--font-montserrat)"],
+      heading: ["var(--font-cal)"],
     },
     extend: {
       colors: {
