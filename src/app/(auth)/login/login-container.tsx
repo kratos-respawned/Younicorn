@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import { signIn } from "next-auth/react";
 import { useRef, useState } from "react";
+import LoginPage from "./login-form";
 type OAuthProviders = "github" | "google";
 export function LoginContainer() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -35,6 +36,7 @@ export function LoginContainer() {
         </CardTitle>
         <CardDescription className="text-lg pt-2">
           <span className="font-semibold font-cal block">Sign in</span>
+          <LoginPage/>
           <span>
             to continue to{" "}
             <span className="font-semibold font-cal">Younicorn</span>

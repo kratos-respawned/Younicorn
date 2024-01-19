@@ -1,20 +1,34 @@
 import { NextAuthOptions, getServerSession } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { env } from "@/env.mjs";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { db } from "@/lib/db";
 import Credentials from "next-auth/providers/credentials";
+import User from "@/app/user";
 const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
   session: {
     strategy: "jwt",
   },
-  pages: {
-    signIn: "/login",
-  },
+  // pages: {
+  //   signIn: "/login",
+  // },
   providers: [
-    // Credentials({
-    // })
+    CredentialsProvider({
+      credentials: {
+        email: {},
+        password: {}
+      },
+      async authorize(credentials) {
+        const user = await  User.find((user) => user.email === credentials.email  && user.password === credentials.password);
+        if (user) {
+          return user;
+        } else {
+          return null;
+        }
+      },
+    })
   ],
   callbacks: {
     async session({ token, session }) {
