@@ -7,6 +7,7 @@ import { errorPromise } from "@/lib/promise-error";
 import { spawn } from "child_process";
 import path from "path";
 import fs from "fs";
+import { db } from "@/lib/db";
 export const npmStart = async (
   name: string,
   PORT: number,
@@ -52,6 +53,17 @@ export const npmStart = async (
   pm2.on("close", (code) => {
     console.log(`child process exited with code ${code}`);
   });
+  await db.application
+    .updateMany({
+      where: {
+        name: name,
+      },
+      data: {
+        status: "DEPLOYED",
+        port: PORT,
+      },
+    })
+    .then(() => console.log("done"));
   return Promise.resolve({
     code: 1,
     message: "Success",

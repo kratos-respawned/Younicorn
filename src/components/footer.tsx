@@ -4,7 +4,7 @@ export const Footer = () => {
   return (
     <footer className="absolute inset-x-0 bottom-0 text-center py-5 text-sm">
       <p className="relative group cursor-pointer">
-        Made with <span className="peer">❤️</span>{" "}
+        Made with <span className="peer">💜</span>
         {/* <Image
           className="  block w-[100px] h-[100px] cursor-auto grayscale peer-hover:grayscale-0   transition-all duration-500 peer-hover:opacity-100 peer-hover:pointer-events-auto pointer-events-none opacity-0 absolute top-0 -translate-y-full left-1/2 -translate-x-1/2"
           src="/computer.gif"

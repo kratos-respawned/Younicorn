@@ -2,8 +2,10 @@
 
 import { env } from "@/env.mjs";
 import { getServerAuth } from "@/lib/auth";
+import { db } from "@/lib/db";
 import { errorPromise } from "@/lib/promise-error";
 import { exec, spawn } from "child_process";
+import { revalidatePath } from "next/cache";
 
 export const runNginx = async (
   name: string,
@@ -39,6 +41,18 @@ export const runNginx = async (
                   code: 0,
                 });
               } else {
+                db.application
+                  .updateMany({
+                    where: {
+                      name: name,
+                    },
+                    data: {
+                      status: "SUCCESS",
+                      url: `${name.toLowerCase()}.${env.DOMAIN}`,
+                    },
+                  })
+                  .then(() => console.log("done"));
+                revalidatePath("/dashboard");
                 resolve({
                   output: "Success",
                   message:

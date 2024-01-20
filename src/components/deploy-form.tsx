@@ -25,6 +25,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { createProject } from "@/lib/deploy";
+import { Loader } from "lucide-react";
 const ProjectDialog = () => {
   const [response, setResponse] = useState(null);
   const router = useRouter();
@@ -119,16 +120,8 @@ const ProjectDialog = () => {
             )}
           />
           <DialogFooter>
-            <Button
-              disabled={form.formState.isSubmitting}
-              type="submit"
-              className="disabled:bg-red-500"
-            >
-              {form.formState.isSubmitting ? (
-                <span className="animate-spin">❤️</span>
-              ) : (
-                <>Deploy</>
-              )}
+            <Button disabled={form.formState.isSubmitting} type="submit">
+              {form.formState.isSubmitting ? <Loader /> : <>Deploy</>}
             </Button>
           </DialogFooter>
         </form>

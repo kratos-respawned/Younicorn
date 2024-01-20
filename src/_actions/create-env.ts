@@ -1,8 +1,10 @@
 "use server";
 
 import { getServerAuth } from "@/lib/auth";
+import { db } from "@/lib/db";
 import { errorPromise } from "@/lib/promise-error";
 import { spawn } from "child_process";
+import { revalidatePath } from "next/cache";
 
 export const createEnv = async (
   name: string,
@@ -20,6 +22,20 @@ export const createEnv = async (
     spawn(cmd, { cwd: `../${name}` })
       .on("close", (code) => {
         if (code === 0) {
+          db.application
+            .updateMany({
+              where: {
+                name: name,
+              },
+              data: {
+                status: "CLONED",
+                env: env,
+              },
+            })
+            .then((res) => {
+              console.log(res);
+            });
+          revalidatePath("/dashboard");
           resolve({
             output: "Success",
             message: "Successfully created .env file.",

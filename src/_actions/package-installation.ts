@@ -1,5 +1,6 @@
 "use server";
 import { getServerAuth } from "@/lib/auth";
+import { db } from "@/lib/db";
 import { errorPromise } from "@/lib/promise-error";
 import { spawn } from "child_process";
 

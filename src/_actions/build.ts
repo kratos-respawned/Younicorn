@@ -11,8 +11,10 @@
 //    });
 //  }, 60 * 60 * 1000);
 import { getServerAuth } from "@/lib/auth";
+import { db } from "@/lib/db";
 import { errorPromise } from "@/lib/promise-error";
 import { spawn } from "child_process";
+import { revalidatePath } from "next/cache";
 
 export const runBuild = async (
   name: string,
@@ -35,6 +37,17 @@ export const runBuild = async (
     spawn(first, [...rest], { cwd: `../${name}` })
       .on("close", (code) => {
         if (code === 0) {
+          db.application
+            .updateMany({
+              where: {
+                name: name,
+              },
+              data: {
+                status: "BUILT",
+              },
+            })
+            .then(() => console.log("done"));
+          revalidatePath("/dashboard");
           resolve({
             output: "Success",
             message: "Build Success",
