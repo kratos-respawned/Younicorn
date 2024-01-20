@@ -9,11 +9,12 @@ import { getServerAuth } from "@/lib/auth";
 import { Navbar } from "@/components/navbar";
 import { SessionContext } from "@/components/session-provider";
 import { Footer } from "@/components/footer";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "yoUnicorn",
   description: "A self hosted cloud platform for all your personal web apps.",
-  creator: "yoUnicorn",
+  creator: "Younicorn",
   authors: [
     { name: "kratos-respawned", url: "https://github.com/kratos-respawned" },
   ],
@@ -45,6 +46,7 @@ export default async function RootLayout({
               {children}
               <Footer />
             </div>
+            <Toaster richColors closeButton />
           </SessionContext>
         </ThemeProvider>
       </body>
