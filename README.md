@@ -14,13 +14,22 @@ This project is a self-hosted platform designed to make the process of self-host
 
 on you ubuntu server run the following command to install the cli tool
 
+```bash
 wget https://github.com/mdansarijaved/cli/releases/download/v1.1.5/main
-Usage
+```
+
+### Usage
+
+```bash
 sudo chmod +x main
 sudo ./main
-Environment Variables
+```
+
+### Environment Variables
+
 To run this project, you will need to add the following environment variables to your .env file
 
+```.env
 "DATABASE_URL",
 "GITHUB_CLIENT_ID",
 "GITHUB_CLIENT_SECRET",
@@ -29,4 +38,6 @@ To run this project, you will need to add the following environment variables to
 "ADMIN_MAIL",
 "ADMIN_PASS",
 "DOMAIN",
+```
+
 just be sure to add the correct values to the variables and you're all set.
