@@ -2,7 +2,10 @@ import { runBuild } from "@/_actions/build";
 import { gitClone } from "@/_actions/clone";
 import { createEnv } from "@/_actions/create-env";
 import { npmInstall } from "@/_actions/package-installation";
+import { npmStart } from "@/_actions/prod/npmStart";
+import { getRunCommand } from "@/_actions/prod/run";
 import { Prompt } from "@/components/ui/sonner";
+import { getFreePort } from "@/lib/get-port";
 import { DeployForm } from "@/validators/deploy-form";
 import { toast } from "sonner";
 
@@ -20,7 +23,6 @@ export const createProject = async (values: DeployForm) => {
   );
   if (installerResponse.code != 1) return;
 
-  console.log("build cmd present");
   if (values.env) {
     const envResponse = await createEnv(cloneResponse.name, values.env);
     Prompt(envResponse.code, envResponse.message, envResponse.output);
@@ -36,6 +38,10 @@ export const createProject = async (values: DeployForm) => {
   }
   Prompt(buildResponse.code, buildResponse.message, buildResponse.output);
   if (buildResponse.code != 1) return;
+  let runResponse;
   if (values.runcommand) {
-  }
+    runResponse = await npmStart(cloneResponse.name, values.runcommand);
+  } else runResponse = await npmStart(cloneResponse.name);
+  Prompt(runResponse.code, runResponse.message, runResponse.output);
+  if (runResponse.code != 1) return;
 };
