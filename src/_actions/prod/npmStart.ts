@@ -9,6 +9,7 @@ import path from "path";
 import fs from "fs";
 export const npmStart = async (
   name: string,
+  PORT: number,
   userCmd?: string
 ): Promise<{
   output: string;
@@ -16,7 +17,6 @@ export const npmStart = async (
   name: string;
   code: -1 | 0 | 1;
 }> => {
-  const PORT = await getFreePort();
   let runCmd = await getRunCommand(name);
   let pm2;
   if (userCmd) {
@@ -30,6 +30,10 @@ export const npmStart = async (
       { cwd: `../${name}` }
     );
   } else if (runCmd) {
+    const packageJsonPath = path.join(`../${name}`, "package.json");
+    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
+    packageJson.scripts.start += ` -p ${PORT}`;
+    fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
     pm2 = spawn(
       "pm2",
       ["start", "npm", "--name", name, "--", "start", `--PORT=${PORT}`],

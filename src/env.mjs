@@ -9,7 +9,7 @@ export const env = createEnv({
     NEXTAUTH_SECRET: z.string().min(1),
     ADMIN_MAIL: z.string().email().min(1),
     ADMIN_PASS: z.string().min(8),
-    DOMAIN: z.string().url().min(1),
+    DOMAIN: z.string().min(1),
   },
   client: {},
   experimental__runtimeEnv: {},

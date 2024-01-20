@@ -16,13 +16,17 @@ export const runNginx = async (
 }> => {
   const session = await getServerAuth();
   if (!session) return errorPromise("Unauthenticated");
-  const cmd = `echo "${generateNginxConfig(
-    name,
-    port
-  )}" > /etc/nginx/sites-enabled/${name}`;
+
   return new Promise((resolve, reject) => {
-    spawn(cmd, { cwd: `../${name}` })
-      .on("close", (code) => {
+    spawn("sudo", [
+      "sh",
+      "-c",
+      `echo '${generateNginxConfig(
+        name,
+        port
+      )}' | sudo tee /etc/nginx/sites-enabled/${name}`,
+    ])
+      .on("close", (code: number) => {
         if (code === 0) {
           exec(
             `sudo nginx -t && sudo systemctl restart nginx`,
@@ -34,13 +38,15 @@ export const runNginx = async (
                   name: name,
                   code: 0,
                 });
+              } else {
+                resolve({
+                  output: "Success",
+                  message:
+                    "Nginx configuration tested and nginx restarted successfully",
+                  name: name,
+                  code: 1,
+                });
               }
-              resolve({
-                output: "Success",
-                message: "Successfully created nginx config file.",
-                name: name,
-                code: 1,
-              });
             }
           );
         } else {
@@ -53,6 +59,7 @@ export const runNginx = async (
         }
       })
       .on("error", (err) => {
+        console.log(err.message);
         resolve({
           output: "Error",
           message: err.message,
@@ -66,7 +73,7 @@ export const runNginx = async (
 const generateNginxConfig = (name: string, port: number) => `
 server {
         listen 80;
-        server_name ${name}.${env.DOMAIN}
+        server_name ${name.toLowerCase()}.${env.DOMAIN}
         gzip on;
         gzip_proxied any;
         gzip_types application/javascript application/x-javascript text/css text/javascript;
@@ -75,7 +82,7 @@ server {
         gzip_min_length 256;
 
         location /_next/static/ {
-                alias /var/www/${name}/.next/static/;
+                alias /${name}/.next/static/;
                 expires 365d;
                 access_log off;
         }
@@ -83,9 +90,9 @@ server {
         location / {
                 proxy_pass http://127.0.0.1:${port};
                 proxy_http_version 1.1;
-                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Upgrade \$http_upgrade;
                 proxy_set_header Connection 'upgrade';
-                proxy_set_header Host $host;
-                proxy_cache_bypass $http_upgrade;
+                proxy_set_header Host \$host;
+                proxy_cache_bypass \$http_upgrade;
         }
 }`;

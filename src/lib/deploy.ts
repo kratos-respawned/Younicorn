@@ -1,9 +1,10 @@
 import { runBuild } from "@/_actions/build";
 import { gitClone } from "@/_actions/clone";
 import { createEnv } from "@/_actions/create-env";
+import { runNginx } from "@/_actions/createNginx";
 import { npmInstall } from "@/_actions/package-installation";
 import { npmStart } from "@/_actions/prod/npmStart";
-import { getRunCommand } from "@/_actions/prod/run";
+
 import { Prompt } from "@/components/ui/sonner";
 import { getFreePort } from "@/lib/get-port";
 import { DeployForm } from "@/validators/deploy-form";
@@ -39,9 +40,13 @@ export const createProject = async (values: DeployForm) => {
   Prompt(buildResponse.code, buildResponse.message, buildResponse.output);
   if (buildResponse.code != 1) return;
   let runResponse;
+  const PORT = await getFreePort();
   if (values.runcommand) {
-    runResponse = await npmStart(cloneResponse.name, values.runcommand);
-  } else runResponse = await npmStart(cloneResponse.name);
+    runResponse = await npmStart(cloneResponse.name, PORT, values.runcommand);
+  } else runResponse = await npmStart(cloneResponse.name, PORT);
   Prompt(runResponse.code, runResponse.message, runResponse.output);
   if (runResponse.code != 1) return;
+  const nginxResponse = await runNginx(cloneResponse.name, PORT);
+  Prompt(nginxResponse.code, nginxResponse.message, nginxResponse.output);
+  if (nginxResponse.code != 1) return;
 };

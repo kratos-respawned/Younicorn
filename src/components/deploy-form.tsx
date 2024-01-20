@@ -40,7 +40,7 @@ const ProjectDialog = () => {
   return (
     <DialogContent className="max-w-2xl w-[700px]">
       <DialogHeader>
-        <DialogTitle>You're almost done.</DialogTitle>
+        <DialogTitle>You&apos;re almost done.</DialogTitle>
         <DialogDescription>
           Please follow the steps to configure your Project and deploy it.
         </DialogDescription>
