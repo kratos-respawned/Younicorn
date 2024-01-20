@@ -35,7 +35,7 @@ export const gitClone = async (
             status: "CLONED",
             gitUrl: url,
             runCommand: "",
-            url: Name + env.DOMAIN,
+            url: Name.toLowerCase() + "." + env.DOMAIN,
           },
         })
         .then((res) => {
