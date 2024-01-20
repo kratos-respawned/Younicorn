@@ -22,7 +22,7 @@ export const npmStart = async (
   if (userCmd) {
     const packageJsonPath = path.join(`../${name}`, "package.json");
     const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
-    packageJson.scripts.younicornProd = userCmd;
+    packageJson.scripts.younicornProd = userCmd + `-p ${PORT}`;
     fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
     pm2 = spawn(
       "pm2",
