@@ -1,8 +1,10 @@
-# Project Name
+# Younicorn : A Self-Hosted Platform
 
 ## Description
 
 This project is a self-hosted platform designed to make the process of self-hosting other applications seamless. It provides a user-friendly interface and automates many of the tasks involved in deploying and managing self-hosted applications.
+
+### Dev XP is like hackathon venue. It's not about the destination, it's about the journey.
 
 ## Features
 
