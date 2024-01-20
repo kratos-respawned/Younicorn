@@ -1,3 +1,4 @@
+import Posts from "@/components/posts";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { getServerAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
@@ -48,6 +49,7 @@ export default async function Home() {
             Docs
           </Link>
         </div>
+        
       </div>
     </section>
   );

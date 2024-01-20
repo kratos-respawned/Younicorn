@@ -21,6 +21,7 @@ export default async function Post() {
         const contentHtml = processedContent.toString();
     
         const blogPostWithHTML: BlogPost & { contentHtml: string } = {
+            id: matterResult.data.id,
             title: matterResult.data.title,
             date: matterResult.data.date,
             contentHtml,
