@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Project Name
 
-## Getting Started
+## Description
 
-First, run the development server:
+This project is a self-hosted platform designed to make the process of self-hosting other applications seamless. It provides a user-friendly interface and automates many of the tasks involved in deploying and managing self-hosted applications.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Automated Deployment**: Easily deploy applications with a single click.
+- **Management Interface**: Manage all your self-hosted applications from a single dashboard.
+- **Support for Multiple Applications**: Supports a wide range of self-hosted applications.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+on you ubuntu server run the following command to install the cli tool
 
-## Learn More
+wget https://github.com/mdansarijaved/cli/releases/download/v1.1.5/main
+Usage
+sudo chmod +x main
+sudo ./main
+Environment Variables
+To run this project, you will need to add the following environment variables to your .env file
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+"DATABASE_URL",
+"GITHUB_CLIENT_ID",
+"GITHUB_CLIENT_SECRET",
+"NEXTAUTH_SECRET",
+"NEXTAUTH_URL",
+"ADMIN_MAIL",
+"ADMIN_PASS",
+"DOMAIN",
+just be sure to add the correct values to the variables and you're all set.
