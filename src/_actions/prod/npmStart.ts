@@ -36,8 +36,8 @@ export const npmStart = async (
     packageJson.scripts.start += ` -p ${PORT}`;
     fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
     pm2 = spawn(
-      "pm2",
-      ["start", "npm", "--name", name, "--", "start", `--PORT=${PORT}`],
+      "sudo",
+      ["pm2", "start", "npm", "--name", name, "--", "start", `--PORT=${PORT}`],
       { cwd: `../${name}` }
     );
   }

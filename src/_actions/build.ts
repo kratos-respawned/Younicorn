@@ -34,7 +34,7 @@ export const runBuild = async (
     rest = ["run", "build"];
   }
   return new Promise((resolve, reject) => {
-    spawn(first, [...rest], { cwd: `../${name}` })
+    spawn("sudo", [first, ...rest], { cwd: `../${name}` })
       .on("close", (code) => {
         if (code === 0) {
           db.application
