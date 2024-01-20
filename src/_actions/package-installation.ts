@@ -15,7 +15,7 @@ export const npmInstall = async (
   const session = await getServerAuth();
   if (!session) return errorPromise("Unauthenticated");
   return new Promise((resolve, reject) => {
-    spawn("npm", ["i"], { cwd: `../${name}` })
+    spawn("sudo", ["npm", "i"], { cwd: `../${name}` })
       .on("close", (code) => {
         if (code === 0) {
           resolve({
