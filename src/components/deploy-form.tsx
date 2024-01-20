@@ -24,13 +24,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { gitClone } from "@/_actions/clone";
-import { useToast } from "@/components/ui/use-toast";
-import { toast } from "sonner";
-
-import { npmInstall } from "@/_actions/package-installation";
-import { Prompt } from "@/components/ui/sonner";
-import { runBuild } from "@/_actions/build";
+import { createProject } from "@/lib/deploy";
 const ProjectDialog = () => {
   const [response, setResponse] = useState(null);
   const router = useRouter();
@@ -43,32 +37,6 @@ const ProjectDialog = () => {
       env: "",
     },
   });
-  const createProject = async (values: DeployForm) => {
-    toast.info("Cloning Repo");
-    const cloneResponse = await gitClone(values.url);
-    Prompt(cloneResponse.code, cloneResponse.message, cloneResponse.output);
-    if (cloneResponse.code == 0) return;
-    toast.info("Installing Packages Now");
-    const installerResponse = await npmInstall(cloneResponse.name);
-    Prompt(
-      installerResponse.code,
-      installerResponse.message,
-      installerResponse.output
-    );
-    if (installerResponse.code != 1) return;
-
-    console.log("build cmd present");
-    let buildResponse;
-    if (values.buildcommand) {
-      console.log("build cmd present");
-      buildResponse = await runBuild(cloneResponse.name, values.buildcommand);
-    } else {
-      console.log("build cmd not present");
-      buildResponse = await runBuild(cloneResponse.name, "npm run build");
-    }
-    Prompt(buildResponse.code, buildResponse.message, buildResponse.output);
-    if (buildResponse.code != 1) return;
-  };
   return (
     <DialogContent className="max-w-2xl w-[700px]">
       <DialogHeader>

@@ -1,4 +1,15 @@
 "use server";
+// todo : kill build if it takes more than half an hour
+//  const process = spawn(first, [...rest], { cwd: `../${name}` });
+//  const timer = setTimeout(() => {
+//    process.kill(); // This will stop the process
+//    reject({
+//      output: "Error",
+//      message: "Build process timed out",
+//      name: name,
+//      code: 0,
+//    });
+//  }, 60 * 60 * 1000);
 import { getServerAuth } from "@/lib/auth";
 import { errorPromise } from "@/lib/promise-error";
 import { spawn } from "child_process";
@@ -33,7 +44,7 @@ export const runBuild = async (
         } else {
           resolve({
             output: "Error",
-            message: "Error Occured While during the build process",
+            message: "Error Occured during the build process",
             name: name,
             code: 0,
           });

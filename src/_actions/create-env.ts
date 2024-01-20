@@ -15,20 +15,21 @@ export const createEnv = async (
 }> => {
   const session = await getServerAuth();
   if (!session) return errorPromise("Unauthenticated");
+  const cmd = `echo "${env}" > .env`;
   return new Promise((resolve, reject) => {
-    spawn("", { cwd: `../${name}` })
+    spawn(cmd, { cwd: `../${name}` })
       .on("close", (code) => {
         if (code === 0) {
           resolve({
             output: "Success",
-            message: "Build Success",
+            message: "Successfully created .env file.",
             name: name,
             code: 1,
           });
         } else {
           resolve({
             output: "Error",
-            message: "Error Occured While during the build process",
+            message: "Error Occured during the build process",
             name: name,
             code: 0,
           });
