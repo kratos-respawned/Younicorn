@@ -24,7 +24,7 @@ export default async function Home() {
         </p>
         <div className="flex justify-center items-center gap-x-4">
           <Link
-            href={session?.user ? "/dashboard/files" : "/login"}
+            href={session?.user ? "/dashboard/" : "/login"}
             className={cn(
               buttonVariants({
                 variant: "default",
