@@ -25,7 +25,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { createProject } from "@/lib/deploy";
-import { Loader } from "lucide-react";
+import { Loader, Loader2 } from "lucide-react";
 const ProjectDialog = () => {
   const [response, setResponse] = useState(null);
   const router = useRouter();
@@ -121,7 +121,11 @@ const ProjectDialog = () => {
           />
           <DialogFooter>
             <Button disabled={form.formState.isSubmitting} type="submit">
-              {form.formState.isSubmitting ? <Loader /> : <>Deploy</>}
+              {form.formState.isSubmitting ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                <>Deploy</>
+              )}
             </Button>
           </DialogFooter>
         </form>
