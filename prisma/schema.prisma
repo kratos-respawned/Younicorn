@@ -67,6 +67,7 @@ model VerificationToken {
 }
 
 enum Status {
+  HALTED
   FAILED
   CLONED
   BUILT

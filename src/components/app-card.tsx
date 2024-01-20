@@ -30,6 +30,8 @@ import {
 import Link from "next/link";
 import { Application } from "@prisma/client";
 import { log } from "@/_actions/log";
+import { halt } from "@/_actions/halt";
+import { restart } from "@/_actions/restart";
 
 export default function AppCard({ gitUrl, url, name, status }: Application) {
   return (
@@ -39,9 +41,12 @@ export default function AppCard({ gitUrl, url, name, status }: Application) {
           <div className="flex gap-3 font-medium">
             <Braces className=" rounded-full my-auto text-2xl" />
             <div>
-              <p className="text-xs sm:text-sm text-left font-bold tracking-wide">
+              <Link
+                href={`/dashboard/${name}`}
+                className="text-xs sm:text-sm cursor-pointer text-left font-bold tracking-wide"
+              >
                 {name}
-              </p>
+              </Link>
 
               <Link
                 target="_blank"
@@ -53,12 +58,7 @@ export default function AppCard({ gitUrl, url, name, status }: Application) {
               </Link>
             </div>
           </div>
-          <Badge
-            variant={status === "FAILED" ? "destructive" : "default"}
-            className="tracking-wider"
-          >
-            {status}
-          </Badge>
+          <MoreOpions name={name} status={status} />
         </CardTitle>
       </CardHeader>
       <CardContent className="flex justify-between">
@@ -67,13 +67,55 @@ export default function AppCard({ gitUrl, url, name, status }: Application) {
         </span>
       </CardContent>
       <CardFooter className="mt-2 flex-col items-start">
-        <p className="text-xs sm:text-sm font-bold text-[#797979]">
-          type error fixed{" "}
-        </p>
-        <p className="text-xs sm:text-sm text-[#797979] font-semibold">
-          54d ago
-        </p>
+        <Badge
+          variant={status === "FAILED" ? "destructive" : "default"}
+          className="tracking-wider"
+        >
+          {status}
+        </Badge>
       </CardFooter>
     </Card>
   );
 }
+
+const MoreOpions = ({ name, status }: { name: string; status: string }) => {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size={"icon"} className="relative h-8 w-8 ">
+          <MoreHorizontal />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-44" align="center" forceMount>
+        <form>
+          {status != "HALTED" ? (
+            <Button
+              formAction={async () => await halt(name)}
+              variant={"ghost"}
+              className=" w-full"
+            >
+              Halt
+            </Button>
+          ) : (
+            <Button
+              formAction={async () => await restart(name)}
+              variant={"ghost"}
+              className=" w-full"
+            >
+              Resume
+            </Button>
+          )}
+
+          <DropdownMenuSeparator />
+          <Button
+            formAction={log}
+            variant={"ghost"}
+            className="hover:bg-destructive/50 w-full"
+          >
+            Delete
+          </Button>
+        </form>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};

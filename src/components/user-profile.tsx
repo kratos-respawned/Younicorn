@@ -31,9 +31,9 @@ export const UserProfile = ({
                 alt={user.name!}
               />
               <AvatarFallback>
-                {user.name
+                {user.email
                   ?.split(" ")
-                  .map((name) => name[0])
+                  .map((email) => email[0])
                   .join("")}
               </AvatarFallback>
             </Avatar>

@@ -12,6 +12,7 @@ import {
 import { signIn } from "next-auth/react";
 import { useRef, useState } from "react";
 import LoginPage from "./login-form";
+import LoginForm from "./login-form";
 type OAuthProviders = "github" | "google";
 export function LoginContainer() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -29,7 +30,7 @@ export function LoginContainer() {
   };
 
   return (
-    <Card className=" max-w-sm w-full">
+    <Card className=" w-full max-w-lg">
       <CardHeader className="space-y-1">
         <CardTitle className="text-3xl font-cal ">
           <span className="text-primary">You</span>nicorn
@@ -42,17 +43,8 @@ export function LoginContainer() {
           </span>
         </CardDescription>
       </CardHeader>
-      <CardContent className="">
-      <LoginPage/>
-        <Button
-          disabled={isLoading}
-          className="mx-auto flex"
-          onClick={() => OAuthLogin("github")}
-          variant="outline"
-        >
-          <Github className="mr-2 h-4 w-4" />
-          Github
-        </Button>
+      <CardContent>
+        <LoginForm />
       </CardContent>
     </Card>
   );
