@@ -9,6 +9,7 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
 model Account {
   id                String  @id @default(cuid()) @map("_id")
   userId            String  @map("user_id")
@@ -40,22 +41,21 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid()) @map("_id")
-  name          String?   
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-
-  stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
-  stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
-  stripePriceId          String?   @map(name: "stripe_price_id")
-  stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
+  id                     String        @id @default(cuid()) @map("_id")
+  name                   String?
+  email                  String?       @unique
+  emailVerified          DateTime?     @map("email_verified")
+  image                  String?
+  accounts               Account[]
+  sessions               Session[]
+  apps                   Application[]
+  stripeCustomerId       String?       @unique @map(name: "stripe_customer_id")
+  stripeSubscriptionId   String?       @unique @map(name: "stripe_subscription_id")
+  stripePriceId          String?       @map(name: "stripe_price_id")
+  stripeCurrentPeriodEnd DateTime?     @map(name: "stripe_current_period_end")
 
   @@map("users")
 }
-
 
 model VerificationToken {
   id         String   @id @default(cuid()) @map("_id")
@@ -65,4 +65,26 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verificationtokens")
+}
+
+enum Status {
+  FAILED
+  CLONED
+  BUILT
+  DEPLOYED
+  SUCCESS
+}
+
+model Application {
+  id           String @id @default(cuid()) @map("_id")
+  name         String
+  url          String
+  port         Int
+  env          String
+  runCommand   String
+  buildCommand String
+  gitUrl       String
+  status       Status
+  userId       String @map("user_id")
+  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
