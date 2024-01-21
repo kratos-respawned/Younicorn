@@ -3,19 +3,19 @@ title: "Getting Started"
 date: "2024-01-20"
 ---
 
-# Younicorn : A Self-Hosted Platform
+## Younicorn : A Self-Hosted Platform
 
-## Description
+### Description
 
 This project is a self-hosted platform designed to make the process of self-hosting other applications seamless. It provides a user-friendly interface and automates many of the tasks involved in deploying and managing self-hosted applications.
 
-## Features
+### Features
 
 - **Automated Deployment**: Easily deploy applications with a single click.
 - **Management Interface**: Manage all your self-hosted applications from a single dashboard.
 - **Support for Multiple Applications**: Supports a wide range of self-hosted applications.
 
-## Installation
+### Installation
 
 on you ubuntu server run the following command to install the cli tool
 
@@ -23,14 +23,14 @@ on you ubuntu server run the following command to install the cli tool
 wget https://github.com/mdansarijaved/cli/releases/download/v1.1.5/main
 ```
 
-### Usage
+#### Usage
 
 ```bash
 sudo chmod +x main
 sudo ./main
 ```
 
-### Environment Variables
+#### Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
 
