@@ -34,6 +34,12 @@ sudo ./main
 
 To run this project, you will need to add the following environment variables to your .env file
 
+```bash
+# for testing use the following variables
+ADMIN_MAIL=loginenv@gmaill.com
+ADMIN_PASS=1234567890
+```
+
 ```.env
 "DATABASE_URL",
 "GITHUB_CLIENT_ID",
