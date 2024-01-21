@@ -3,7 +3,7 @@ title: "Getting Started"
 date: "2024-01-20"
 ---
 
-# Project Name
+# Younicorn : A Self-Hosted Platform
 
 ## Description
 
