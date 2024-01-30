@@ -15,6 +15,7 @@ This project is a self-hosted platform designed to make the process of self-host
 ## Installation
 
 on you ubuntu server run the following command to install the cli tool
+**( cli is not complete yet, you'll have to manually setup nginx and pm2 for now )**
 
 ```bash
 wget https://github.com/mdansarijaved/cli/releases/download/v1.1.5/main
